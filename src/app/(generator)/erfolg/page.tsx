@@ -151,10 +151,10 @@ function ErfolgContent() {
               <p>
                 Bei Fragen oder Problemen kontaktieren Sie uns:{' '}
                 <a
-                  href="mailto:support@mieter-selbstauskunft.de"
+                  href="mailto:info@mietunterlagen.de"
                   className="text-primary-600 hover:underline"
                 >
-                  support@mieter-selbstauskunft.de
+                  info@mietunterlagen.de
                 </a>
               </p>
             </div>

@@ -312,7 +312,7 @@ export function SelbstauskunftPDF({ data }: PDFDocumentProps) {
         {/* Footer */}
         <View style={pdfStyles.footer}>
           <Text style={pdfStyles.footerText}>
-            Erstellt mit Mieter-Selbstauskunft Generator
+            Erstellt mit Mietunterlagen.de
           </Text>
           <Text style={pdfStyles.footerText}>
             Datenschutzhinweis: Diese Selbstauskunft dient ausschließlich der
