@@ -38,7 +38,7 @@ export function HowItWorks() {
       <div className="container">
         <div className="mx-auto max-w-3xl text-center mb-16">
           <h2 className="text-heading-xl md:text-display-sm font-bold text-neutral-900 mb-4">
-            So einfach geht's
+            So einfach geht&apos;s
           </h2>
           <p className="text-lg text-neutral-600">
             In nur drei Schritten zu Ihrer professionellen Mieter-Selbstauskunft

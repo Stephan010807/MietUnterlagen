@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useFormStore } from '@/hooks/useFormStore';
 import { Button } from '@/components/ui/button';
@@ -17,20 +17,7 @@ function ErfolgContent() {
 
   const sessionId = searchParams.get('session_id');
 
-  useEffect(() => {
-    if (!sessionId) {
-      // If no session ID, redirect to home
-      router.push('/');
-      return;
-    }
-
-    // Auto-download PDF on page load
-    if (!hasDownloaded && formData.firstName) {
-      handleDownloadPDF();
-    }
-  }, [sessionId, formData, hasDownloaded]);
-
-  const handleDownloadPDF = async () => {
+  const handleDownloadPDF = useCallback(async () => {
     if (!formData.firstName || !formData.lastName) {
       router.push('/');
       return;
@@ -46,7 +33,20 @@ function ErfolgContent() {
     } finally {
       setIsDownloading(false);
     }
-  };
+  }, [formData, router]);
+
+  useEffect(() => {
+    if (!sessionId) {
+      // If no session ID, redirect to home
+      router.push('/');
+      return;
+    }
+
+    // Auto-download PDF on page load
+    if (!hasDownloaded && formData.firstName) {
+      handleDownloadPDF();
+    }
+  }, [sessionId, formData, hasDownloaded, handleDownloadPDF, router]);
 
   const handleBackToHome = () => {
     resetForm();
