@@ -113,15 +113,35 @@ export const step6Schema = z.object({
   }),
 });
 
-// Complete form schema
-export const completeFormSchema = z.object({
-  ...step1Schema.shape,
-  ...step2Schema.shape,
-  ...step3Schema.shape,
-  ...step4Schema.shape,
-  ...step5Schema.shape,
-  ...step6Schema.shape,
-});
+// Complete form schema - merging all schemas
+export const completeFormSchema = step1Schema
+  .merge(
+    z.object({
+      employmentStatus: z.enum(
+        ['employed', 'self-employed', 'student', 'unemployed', 'retired'],
+        {
+          required_error: 'Beschäftigungsstatus ist erforderlich',
+        }
+      ),
+      employer: z.string().optional(),
+      position: z.string().optional(),
+      employedSince: z.string().optional(),
+      university: z.string().optional(),
+      monthlyNetIncome: z.string().min(1, 'Nettoeinkommen ist erforderlich'),
+      additionalIncome: z.string().optional(),
+    })
+  )
+  .merge(step3Schema)
+  .merge(
+    z.object({
+      hasSchufa: z.boolean(),
+      schufaScore: z.string().optional(),
+      hasRentalArrears: z.boolean(),
+      rentalArrearsDetails: z.string().optional(),
+    })
+  )
+  .merge(step5Schema)
+  .merge(step6Schema);
 
 export type Step1Data = z.infer<typeof step1Schema>;
 export type Step2Data = z.infer<typeof step2Schema>;
