@@ -43,8 +43,8 @@ export interface SelbstauskunftData {
   isSmoker: boolean;
   messageToLandlord?: string;
   previousLandlord?: {
-    name: string;
-    phone: string;
+    name?: string;
+    phone?: string;
   };
 
   // Step 6: Review & Consent
