@@ -1,0 +1,11 @@
+# Robots.txt für Mieter-Selbstauskunft Generator
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow admin/internal pages (if any)
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://mietunterlagen.de/sitemap.xml

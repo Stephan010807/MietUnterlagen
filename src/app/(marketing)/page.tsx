@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Hero } from '@/components/marketing/Hero';
 import { Features } from '@/components/marketing/Features';
 import { HowItWorks } from '@/components/marketing/HowItWorks';
 import { Pricing } from '@/components/marketing/Pricing';
 import { FAQ } from '@/components/marketing/FAQ';
+import { faqSchema, productSchema } from '@/lib/structured-data';
 
 export const metadata: Metadata = {
   title: 'Professionelle Mieter-Selbstauskunft in 5 Minuten erstellen',
@@ -22,6 +24,22 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
+      {/* FAQ & Product Schema */}
+      <Script
+        id="faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqSchema),
+        }}
+      />
+      <Script
+        id="product-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productSchema),
+        }}
+      />
+
       <Hero />
       <Features />
       <HowItWorks />
