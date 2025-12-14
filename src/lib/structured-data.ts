@@ -81,6 +81,7 @@ export const productSchema = {
   '@type': 'Product',
   name: 'Mieter-Selbstauskunft PDF',
   description: 'Professionelle, rechtlich geprüfte Mieter-Selbstauskunft als PDF zum Download',
+  image: `${SITE_CONFIG.url}/og-image.jpg`,
   brand: {
     '@type': 'Brand',
     name: 'Mietunterlagen.de',
@@ -92,6 +93,28 @@ export const productSchema = {
     availability: 'https://schema.org/InStock',
     url: `${SITE_CONFIG.url}/formular`,
     priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    shippingDetails: {
+      '@type': 'OfferShippingDetails',
+      shippingDestination: {
+        '@type': 'DefinedRegion',
+        addressCountry: 'DE',
+      },
+      deliveryTime: {
+        '@type': 'ShippingDeliveryTime',
+        handlingTime: {
+          '@type': 'QuantitativeValue',
+          minValue: 0,
+          maxValue: 0,
+          unitCode: 'DAY',
+        },
+        transitTime: {
+          '@type': 'QuantitativeValue',
+          minValue: 0,
+          maxValue: 0,
+          unitCode: 'DAY',
+        },
+      },
+    },
   },
   aggregateRating: {
     '@type': 'AggregateRating',
