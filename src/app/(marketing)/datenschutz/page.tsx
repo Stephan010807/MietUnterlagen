@@ -21,11 +21,13 @@ export default function DatenschutzPage() {
         <p>
           Verantwortlich für die Datenverarbeitung auf dieser Website ist:
           <br />
-          [Ihr Name/Firmenname]
+          Stephan Brockmeier
           <br />
-          [Ihre Adresse]
+          Ostendstraße 161
           <br />
-          E-Mail: [Ihre E-Mail]
+          90482 Nürnberg
+          <br />
+          E-Mail: info@mietunterlagen.de
         </p>
 
         <h2>2. Erhebung und Speicherung personenbezogener Daten</h2>
@@ -93,7 +95,7 @@ export default function DatenschutzPage() {
         <p>
           Bei Fragen zum Datenschutz kontaktieren Sie uns bitte unter:
           <br />
-          E-Mail: datenschutz@mieter-selbstauskunft.de
+          E-Mail: info@mietunterlagen.de
         </p>
 
         <p className="text-sm text-neutral-600">
