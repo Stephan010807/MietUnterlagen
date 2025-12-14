@@ -10,7 +10,7 @@ export const SITE_CONFIG = {
     'Wohnung Bewerbung',
     'Selbstauskunft Vorlage',
   ],
-} as const;
+};
 
 export const PDF_PRICE = 900; // in cents (9.00 EUR)
 
