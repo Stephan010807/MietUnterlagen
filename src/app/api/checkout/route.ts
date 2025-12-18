@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     // Note: formData is stored in localStorage on client-side
     // We only store essential info in metadata to avoid the 500 char limit
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card', 'paypal'],
+      payment_method_types: ['card'],
       line_items: [
         {
           price_data: {
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Checkout error:', error);
     return NextResponse.json(
-      { error: 'Failed to create checkout session' },
+      { error: error instanceof Error ? error.message : 'Failed to create checkout session' },
       { status: 500 }
     );
   }
