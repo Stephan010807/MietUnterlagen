@@ -1,107 +1,25 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Datenschutzerklärung',
-  description:
-    'Datenschutzerklärung für den Mieter-Selbstauskunft Generator - Informationen zur Verarbeitung Ihrer Daten',
+  title: 'Datenschutz',
+  alternates: { canonical: '/datenschutz' },
 };
 
-export default function DatenschutzPage() {
+export default function Datenschutz() {
   return (
-    <div className="container py-16 md:py-24">
-      <div className="mx-auto max-w-3xl prose prose-neutral">
-        <h1>Datenschutzerklärung</h1>
-
-        <p className="lead">
-          Ihre Privatsphäre ist uns wichtig. Diese Datenschutzerklärung erklärt,
-          wie wir mit Ihren personenbezogenen Daten umgehen.
-        </p>
-
-        <h2>1. Verantwortlicher</h2>
-        <p>
-          Verantwortlich für die Datenverarbeitung auf dieser Website ist:
-          <br />
-          Stephan Brockmeier
-          <br />
-          Ostendstraße 161
-          <br />
-          90482 Nürnberg
-          <br />
-          E-Mail: info@mietunterlagen.de
-        </p>
-
-        <h2>2. Erhebung und Speicherung personenbezogener Daten</h2>
-        <p>
-          Beim Erstellen Ihrer Mieter-Selbstauskunft geben Sie verschiedene
-          personenbezogene Daten ein, darunter:
-        </p>
-        <ul>
-          <li>Name, Geburtsdatum, Geburtsort</li>
-          <li>Aktuelle Adresse</li>
-          <li>Kontaktdaten (E-Mail, Telefon)</li>
-          <li>Beschäftigungsinformationen</li>
-          <li>Einkommensdaten</li>
-        </ul>
-
-        <h2>3. Zweck der Datenverarbeitung</h2>
-        <p>Ihre Daten werden ausschließlich für folgende Zwecke verwendet:</p>
-        <ul>
-          <li>Erstellung Ihrer personalisierten Selbstauskunft als PDF</li>
-          <li>Abwicklung der Zahlung über Stripe</li>
-          <li>Versand der Kaufbestätigung per E-Mail</li>
-        </ul>
-
-        <h2>4. Keine Datenspeicherung</h2>
-        <p>
-          <strong>Wichtig:</strong> Ihre Formulardaten werden{' '}
-          <strong>nicht dauerhaft</strong> auf unseren Servern gespeichert. Die
-          Daten werden ausschließlich im Browser verarbeitet und nach der
-          PDF-Generierung automatisch gelöscht.
-        </p>
-
-        <h2>5. Cookies und lokale Speicherung</h2>
-        <p>
-          Wir verwenden LocalStorage in Ihrem Browser, um Ihre Formularfortschritte
-          temporär zu speichern. Dies dient ausschließlich Ihrer Bequemlichkeit,
-          damit Sie das Formular nicht bei jedem Besuch neu ausfüllen müssen. Sie
-          können diese Daten jederzeit in Ihren Browser-Einstellungen löschen.
-        </p>
-
-        <h2>6. Weitergabe von Daten</h2>
-        <p>Wir geben Ihre Daten nur in folgenden Fällen weiter:</p>
-        <ul>
-          <li>
-            <strong>Stripe:</strong> Zahlungsinformationen werden an Stripe
-            übertragen (siehe Stripe-Datenschutzerklärung)
-          </li>
-          <li>
-            <strong>Rechtliche Verpflichtung:</strong> Wenn gesetzlich
-            vorgeschrieben
-          </li>
-        </ul>
-
-        <h2>7. Ihre Rechte</h2>
-        <p>Sie haben folgende Rechte bezüglich Ihrer personenbezogenen Daten:</p>
-        <ul>
-          <li>Recht auf Auskunft</li>
-          <li>Recht auf Berichtigung</li>
-          <li>Recht auf Löschung</li>
-          <li>Recht auf Einschränkung der Verarbeitung</li>
-          <li>Recht auf Datenübertragbarkeit</li>
-          <li>Widerspruchsrecht</li>
-        </ul>
-
-        <h2>8. Kontakt</h2>
-        <p>
-          Bei Fragen zum Datenschutz kontaktieren Sie uns bitte unter:
-          <br />
-          E-Mail: info@mietunterlagen.de
-        </p>
-
-        <p className="text-sm text-neutral-600">
-          Stand: {new Date().toLocaleDateString('de-DE')}
-        </p>
-      </div>
-    </div>
+    <article className="mx-auto max-w-3xl space-y-5 px-4 py-12">
+      <h1 className="text-3xl font-bold">Datenschutz</h1>
+      <h2 className="text-xl font-semibold">Verantwortlicher</h2>
+      <p>Stephan Brockmeier, Ostendstraße 161, 90482 Nürnberg, <a className="underline" href="mailto:info@mietunterlagen.de">info@mietunterlagen.de</a>.</p>
+      <h2 className="text-xl font-semibold">Formular, Anschreiben und Anlagen</h2>
+      <p>Ihre Eingaben und die kostenlose PDF-Erstellung bleiben im Browser. Mit Ihrer Auswahl speichert der Browser Formular und Anschreiben auf diesem Gerät. Der vorbereitete Kaufcode wird lokal abgelegt, sofern der Browser dies zulässt. Sie können diese Einträge einschließlich Entwürfen aus der vorherigen Version im Formular löschen. Heruntergeladene Dateien verwalten Sie selbst. Anlagen werden im Browser verarbeitet und bei einem Seitenwechsel aus dem Formular entfernt.</p>
+      <h2 className="text-xl font-semibold">Zahlung und Export</h2>
+      <p>Stripe verarbeitet die im Checkout eingegebenen Kontakt- und Zahlungsdaten. Die Checkout-Session enthält die Angebotskennung und den Hash Ihres Kaufcode-Geheimnisses. Für die Prüfung des Kaufs fragen wir den zugehörigen Zahlungsstatus bei Stripe ab. Der Kaufcode erlaubt den Export innerhalb von 30 Tagen nach Zahlung. Zahlungsdaten bei Stripe unterliegen dessen Aufbewahrung und den für den Anbieter geltenden Pflichten.</p>
+      <p>Wenn Sie den bezahlten Export auslösen und die Übermittlung bestätigen, verarbeitet unser Server Ihre Formularangaben und das Anschreiben für die Dauer der PDF-Erstellung. Die Anwendung speichert diese Inhalte und das erzeugte PDF nicht. Eigene PDF-Anlagen werden auf Ihrem Gerät angefügt.</p>
+      <p>Weitere Informationen zur Zahlungsverarbeitung finden Sie in den <a className="underline" href="https://stripe.com/de/privacy">Datenschutzhinweisen von Stripe</a>.</p>
+      <h2 className="text-xl font-semibold">Aufruf der Website und Rechte</h2>
+      <p>Beim Aufruf fallen technische Verbindungsdaten an, etwa die IP-Adresse. Die Anwendung enthält keine Werbe- oder Analyse-Tags.</p>
+      <p>Sie können sich für Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch an die oben genannte Kontaktadresse wenden. Sie können sich außerdem bei einer Datenschutzaufsichtsbehörde beschweren.</p>
+    </article>
   );
 }

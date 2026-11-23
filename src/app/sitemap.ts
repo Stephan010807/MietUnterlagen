@@ -1,32 +1,8 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
+import { SITE_CONFIG } from '@/lib/constants';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://mietunterlagen.de';
-
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/formular`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/datenschutz`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/impressum`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-  ];
+  return ['', '/formular', '/datenschutz', '/impressum'].map((path) => ({
+    url: SITE_CONFIG.url + path,
+  }));
 }

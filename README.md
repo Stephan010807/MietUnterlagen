@@ -1,208 +1,30 @@
-# Mieter-Selbstauskunft Generator
+# MietUnterlagen
 
-A premium, conversion-optimized tenant self-disclosure form generator for the German rental market. Built with Next.js 15, TypeScript, Tailwind CSS, and Stripe.
+Kostenlose Mieterselbstauskunft und optionale Bewerbungsmappe mit Anschreiben und eigenen PDF-Anlagen.
 
-## Features
+## Lokal starten
 
-- 🎨 **Premium Design**: High-quality UI with Tailwind CSS custom design system
-- 📝 **6-Step Form**: Guided multi-step form with validation
-- 📄 **PDF Generation**: Client-side PDF generation with React-PDF
-- 💳 **Stripe Integration**: Secure payment processing
-- 🔒 **Privacy-First**: No data storage, GDPR-compliant
-- 📱 **Responsive**: Mobile-first design, works on all devices
-- ⚡ **Fast**: Optimized performance with Next.js 15
-- 🎯 **SEO-Ready**: Optimized metadata and structured data
+Node.js 24 verwenden.
 
-## Tech Stack
+    npm ci
+    npm run dev
+    npm run lint
+    npm run typecheck
+    npm test
+    npm run build
 
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Form Management**: React Hook Form + Zod
-- **State Management**: Zustand
-- **PDF Generation**: @react-pdf/renderer
-- **Payments**: Stripe
-- **UI Components**: Radix UI + Custom components
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
+Öffnen Sie http://localhost:3000. Ohne Stripe-Konfiguration funktionieren die kostenlose Selbstauskunft und der Anschreiben-Editor. Die Kauf-API bleibt gesperrt.
 
-## Getting Started
+## Stripe testen und freigeben
 
-### Prerequisites
+1. **.env.example** nach **.env.local** kopieren. Stripe-Testschlüssel und Signaturgeheimnis eintragen. **CHECKOUT_ORIGIN** muss exakt dem Browser-Origin entsprechen.
+2. Im Stripe-Testkonto Kartenzahlung aktivieren. Den lokalen Webhook mit Stripe CLI weiterleiten, das ausgegebene Test-Signaturgeheimnis eintragen und den Entwicklungsserver neu starten.
 
-- Node.js 18+ installed
-- npm or yarn
-- Stripe account (for payments)
+       stripe listen --events checkout.session.completed,checkout.session.async_payment_succeeded,charge.refunded,charge.dispute.created --forward-to localhost:3000/api/webhook
 
-### Installation
+3. Testentwurf speichern, Anschreiben aus Vorlage erzeugen, Checkout vorbereiten und Kaufcode privat kopieren. Ausschließlich mit Stripe-Testkarte zahlen. Nach Rückkehr Kauf prüfen, Datei exportieren, Kaufcode in einem neuen Browserprofil prüfen und Anlagen erneut hinzufügen. Abbruch, Zahlungsfehler, verzögerte Bestätigung, Teil- und Vollerstattung sowie Antwort auf doppelte Webhooks prüfen. Eine Erstattung sperrt weitere Exporte. Bereits heruntergeladene PDFs bleiben beim Käufer.
+4. Vor Livebetrieb die Freigabepunkte im Audit abarbeiten. Live erfordert HTTPS, passende Live-Schlüssel und **CHECKOUT_MODE=live**. Neue Käufe brauchen zusätzlich **CHECKOUT_NEW_ORDERS=true**. Vorhandene Kaufcodes aus demselben Stripe-Konto bleiben bei pausiertem Neukauf prüfbar. Bereits ausgestellte Stripe-Checkout-Links bleiben bis zu ihrem Ablauf verwendbar. Zum sofortigen Verkaufsstopp offene Sessions in Stripe beenden.
 
-1. **Clone the repository**
-   ```bash
-   cd mieter-selbstauskunft
-   ```
+Preis und Angebotskennung liegen in **src/lib/constants.ts**. Bestehende Stripe-Sessions behalten ihren Betrag. Bei Preisänderungen die alte Angebotskennung samt Betrag für die Restlaufzeit weiter verifizieren und die neue Angebotsversion separat aktivieren.
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-
-   Copy the `.env.example` to `.env.local`:
-   ```bash
-   cp .env.example .env.local
-   ```
-
-   Then edit `.env.local` and add your Stripe keys:
-   - Get your Stripe keys from https://dashboard.stripe.com/apikeys
-   - Use test mode keys for development (sk_test_... and pk_test_...)
-
-4. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Project Structure
-
-```
-src/
-├── app/                    # Next.js App Router pages
-│   ├── (marketing)/       # Marketing pages (homepage, legal)
-│   ├── (generator)/       # Generator pages (form, preview, success)
-│   └── api/               # API routes (Stripe checkout, webhook)
-├── components/
-│   ├── ui/                # Reusable UI components
-│   ├── form/              # Form-specific components
-│   ├── pdf/               # PDF generation components
-│   └── marketing/         # Landing page sections
-├── lib/
-│   ├── validators/        # Zod schemas
-│   ├── pdf/               # PDF utilities
-│   ├── stripe.ts          # Stripe client
-│   ├── utils.ts           # Utility functions
-│   └── constants.ts       # App constants
-├── hooks/                 # Custom React hooks
-├── types/                 # TypeScript type definitions
-└── styles/                # Global styles
-```
-
-## Key Pages
-
-- `/` - Landing page with Hero, Features, FAQ, etc.
-- `/formular` - Multi-step form (6 steps)
-- `/vorschau` - PDF preview before payment
-- `/erfolg` - Success page with PDF download
-- `/datenschutz` - Privacy policy
-- `/impressum` - Legal imprint (required in Germany)
-
-## Configuration
-
-### Stripe Setup
-
-1. Create a Stripe account at https://stripe.com
-2. Get your API keys from the Dashboard
-3. For local development, use test mode keys
-4. Set up webhook endpoint for production:
-   - URL: `https://yourdomain.com/api/webhook`
-   - Events to listen for: `checkout.session.completed`, `payment_intent.succeeded`
-
-### Price Configuration
-
-The PDF price is set in `src/lib/constants.ts`:
-```typescript
-export const PDF_PRICE = 900; // in cents (9.00 EUR)
-```
-
-## Deployment
-
-### Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Import the repository in Vercel
-3. Add environment variables in Vercel dashboard
-4. Deploy
-
-### Environment Variables for Production
-
-Make sure to set these in your deployment platform:
-- `NEXT_PUBLIC_APP_URL` - Your production URL
-- `STRIPE_SECRET_KEY` - Your production Stripe secret key
-- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` - Your production Stripe publishable key
-- `STRIPE_WEBHOOK_SECRET` - Your Stripe webhook secret
-
-## Development
-
-### Run development server
-```bash
-npm run dev
-```
-
-### Build for production
-```bash
-npm run build
-```
-
-### Start production server
-```bash
-npm start
-```
-
-### Lint code
-```bash
-npm run lint
-```
-
-## Features Roadmap
-
-### Current (MVP)
-- ✅ Multi-step form with validation
-- ✅ PDF generation
-- ✅ Stripe payment integration
-- ✅ Landing page with marketing sections
-- ✅ Basic legal pages
-
-### Future Enhancements
-- [ ] Email receipts (Resend integration)
-- [ ] English version
-- [ ] WG-Selbstauskunft variant
-- [ ] Bundle offers
-- [ ] Analytics integration
-- [ ] A/B testing for pricing
-- [ ] Abandoned cart recovery
-- [ ] SEO blog content
-- [ ] Programmatic SEO pages (city-specific)
-
-## Legal Requirements (Germany)
-
-This project includes placeholder legal pages that **MUST** be customized:
-
-- **Impressum** (`/impressum`) - Required by German law (§ 5 TMG)
-- **Datenschutzerklärung** (`/datenschutz`) - Privacy policy (GDPR)
-- **AGB** - Terms and conditions (recommended)
-
-⚠️ **Important**: Consult with a lawyer to ensure legal compliance for the German market.
-
-## Support
-
-For questions or issues:
-- Email: [Your support email]
-- GitHub Issues: [Your repo URL]/issues
-
-## License
-
-[Your chosen license]
-
-## Credits
-
-Built with ❤️ using:
-- Next.js
-- Tailwind CSS
-- Stripe
-- React-PDF
-- And many other great open-source libraries
-
----
-
-**Note**: This is a production-ready MVP. Customize the legal pages, set up proper error monitoring, and add analytics before launching to production.
+[Audit und Freigabe](docs/audit/MietUnterlagen_Audit_2026.md) · [Marketing und Modell](docs/audit/Marketing_und_Wirtschaftlichkeit.md)
