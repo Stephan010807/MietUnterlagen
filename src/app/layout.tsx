@@ -1,113 +1,40 @@
 import type { Metadata } from 'next';
-import { Inter, Lexend } from 'next/font/google';
+import Link from 'next/link';
 import { SITE_CONFIG } from '@/lib/constants';
 import '@/styles/globals.css';
-import { Analytics } from '@vercel/analytics/react';
-import { organizationSchema, webApplicationSchema } from '@/lib/structured-data';
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
-
-const lexend = Lexend({
-  subsets: ['latin'],
-  variable: '--font-lexend',
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
-  title: {
-    default: SITE_CONFIG.name,
-    template: `%s | ${SITE_CONFIG.name}`,
-  },
-  description: SITE_CONFIG.description,
-  keywords: SITE_CONFIG.keywords,
-  authors: [{ name: 'Mietunterlagen.de' }],
-  creator: 'Mietunterlagen.de',
+  title: { default: SITE_CONFIG.name, template: `%s | ${SITE_CONFIG.name}` },
   metadataBase: new URL(SITE_CONFIG.url),
-  alternates: {
-    canonical: SITE_CONFIG.url,
-  },
+  description: SITE_CONFIG.description,
   openGraph: {
     type: 'website',
     locale: 'de_DE',
-    url: SITE_CONFIG.url,
-    title: SITE_CONFIG.name,
-    description: SITE_CONFIG.description,
     siteName: SITE_CONFIG.name,
-    images: [
-      {
-        url: `${SITE_CONFIG.url}/og-image.jpeg`,
-        width: 1200,
-        height: 630,
-        alt: 'Mieter-Selbstauskunft Generator',
-      },
-    ],
+    images: ['/og-image.jpeg'],
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: SITE_CONFIG.name,
-    description: SITE_CONFIG.description,
-    images: [`${SITE_CONFIG.url}/og-image.jpeg`],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  verification: {
-    google: 'your-google-verification-code', // Add after Google Search Console setup
-  },
+  twitter: { card: 'summary_large_image', images: ['/og-image.jpeg'] },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de" className={`${inter.variable} ${lexend.variable}`}>
-      <head>
-        {/* Google tag (gtag.js) */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=AW-17804794191"
-        ></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'AW-17804794191');
-            `,
-          }}
-        />
-        {/* Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(webApplicationSchema),
-          }}
-        />
-      </head>
-      <body className="font-sans">
-        {children}
-        <Analytics />
+    <html lang="de">
+      <body className="flex min-h-screen flex-col bg-white font-sans text-slate-900">
+        <a href="#inhalt" className="sr-only focus:not-sr-only focus:p-3">Zum Inhalt springen</a>
+        <header className="border-b border-slate-200">
+          <nav aria-label="Hauptnavigation" className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-4">
+            <Link href="/" className="text-lg font-bold">MietUnterlagen</Link>
+            <Link href="/formular" className="font-medium underline underline-offset-4">Bewerbung erstellen</Link>
+          </nav>
+        </header>
+        <main id="inhalt" className="flex-1">{children}</main>
+        <footer className="border-t border-slate-200">
+          <nav aria-label="Rechtliches" className="mx-auto flex max-w-5xl flex-wrap gap-5 px-4 py-6 text-sm underline">
+            <Link href="/impressum">Impressum</Link>
+            <Link href="/datenschutz">Datenschutz</Link>
+            <a href="mailto:info@mietunterlagen.de">Kontakt</a>
+          </nav>
+        </footer>
       </body>
     </html>
   );

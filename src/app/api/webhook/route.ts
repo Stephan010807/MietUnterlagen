@@ -1,75 +1,17 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { stripe } from '@/lib/stripe';
-import Stripe from 'stripe';
+import { apiError, limitedText } from '@/lib/request-body';
+import { stripeConfig } from '@/lib/stripe';
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
+  const config = stripeConfig();
+  if (!config) return apiError('Webhook nicht verfügbar.', 503);
+  const signature = request.headers.get('stripe-signature');
+  if (!signature) return apiError('Ungültige Signatur.', 400);
   try {
-    const body = await request.text();
-    const signature = request.headers.get('stripe-signature');
-
-    if (!signature || !webhookSecret) {
-      return NextResponse.json(
-        { error: 'Missing signature or webhook secret' },
-        { status: 400 }
-      );
-    }
-
-    let event: Stripe.Event;
-
-    try {
-      event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-    } catch (err) {
-      console.error('Webhook signature verification failed:', err);
-      return NextResponse.json(
-        { error: 'Invalid signature' },
-        { status: 400 }
-      );
-    }
-
-    // Handle the event
-    switch (event.type) {
-      case 'checkout.session.completed': {
-        const session = event.data.object as Stripe.Checkout.Session;
-
-        // Log successful payment
-        console.log('Payment successful:', {
-          sessionId: session.id,
-          customerEmail: session.customer_email,
-          amount: session.amount_total,
-        });
-
-        // Here you could:
-        // - Store payment record in database
-        // - Send receipt email
-        // - Track conversion in analytics
-
-        break;
-      }
-
-      case 'payment_intent.succeeded': {
-        const paymentIntent = event.data.object as Stripe.PaymentIntent;
-        console.log('PaymentIntent succeeded:', paymentIntent.id);
-        break;
-      }
-
-      case 'payment_intent.payment_failed': {
-        const paymentIntent = event.data.object as Stripe.PaymentIntent;
-        console.error('PaymentIntent failed:', paymentIntent.id);
-        break;
-      }
-
-      default:
-        console.log(`Unhandled event type: ${event.type}`);
-    }
-
-    return NextResponse.json({ received: true });
-  } catch (error) {
-    console.error('Webhook error:', error);
-    return NextResponse.json(
-      { error: 'Webhook handler failed' },
-      { status: 500 }
-    );
+    const event = config.stripe.webhooks.constructEvent(await limitedText(request, 128 * 1024), signature, config.webhook);
+    if (event.livemode !== config.live) return apiError('Ungültiger Zahlungsmodus.', 400);
+    // Stripe remains the source of truth. No event can create or extend an entitlement.
+    return Response.json({ received: true });
+  } catch {
+    return apiError('Ungültige Signatur oder Nachricht.', 400);
   }
 }

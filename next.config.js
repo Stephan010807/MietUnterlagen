@@ -1,15 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  webpack: (config) => {
-    config.resolve.alias.canvas = false;
-    config.resolve.alias.encoding = false;
-    return config;
+  poweredByHeader: false,
+  async headers() {
+    return [{
+      source: '/:path*',
+      headers: [
+        { key: 'X-Content-Type-Options', value: 'nosniff' },
+        { key: 'X-Frame-Options', value: 'DENY' },
+        { key: 'Referrer-Policy', value: 'no-referrer' },
+      ],
+    }];
   },
-  // Ensure no trailing slashes that could cause redirects
-  trailingSlash: false,
-  // Skip trailing slash redirect
-  skipTrailingSlashRedirect: false,
 };
 
 module.exports = nextConfig;

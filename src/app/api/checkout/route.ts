@@ -1,52 +1,41 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { stripe } from '@/lib/stripe';
-import { PDF_PRICE, SITE_CONFIG } from '@/lib/constants';
+import { OFFER } from '@/lib/constants';
+import { apiError, limitedJson } from '@/lib/request-body';
+import { secretHash, secretSchema, stripeConfig } from '@/lib/stripe';
+import { z } from 'zod';
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
+  const config = stripeConfig();
+  if (!config?.acceptingOrders) return apiError('Der Kauf ist derzeit nicht verfügbar.', 503);
+  if (request.headers.get('origin') !== config.origin) return apiError('Anfrage abgelehnt.', 403);
+
+  let secret: string;
   try {
-    const body = await request.json();
-    const { email } = body;
-
-    if (typeof email !== 'string' || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json(
-        { error: 'Form data is required' },
-        { status: 400 }
-      );
-    }
-
-    // Create Stripe Checkout session
-    // Note: formData is stored in localStorage on client-side
-    // We only store essential info in metadata to avoid the 500 char limit
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price_data: {
-            currency: 'eur',
-            product_data: {
-              name: 'Mieter-Selbstauskunft PDF',
-              description:
-                'Professionelle Mieter-Selbstauskunft als PDF',
-              images: [`${SITE_CONFIG.url}/og-image.jpeg`],
-            },
-            unit_amount: PDF_PRICE,
-          },
-          quantity: 1,
-        },
-      ],
+    ({ secret } = z.object({ secret: secretSchema }).strict().parse(await limitedJson(request, 512)));
+  } catch {
+    return apiError('Ungültige Anfrage.', 400);
+  }
+  try {
+    const hash = secretHash(secret);
+    const session = await config.stripe.checkout.sessions.create({
       mode: 'payment',
-      success_url: `${SITE_CONFIG.url}/erfolg?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${SITE_CONFIG.url}/vorschau`,
-      customer_email: email,
+      adaptive_pricing: { enabled: false },
+      allowed_payment_method_types: ['card'],
+      line_items: [{
+        price_data: {
+          currency: OFFER.currency, unit_amount: OFFER.amount,
+          product_data: { name: OFFER.name, description: 'PDF-Export und Korrekturen für 30 Tage ab Zahlung.' },
+        },
+        quantity: 1,
+      }],
+      metadata: { offer: OFFER.id, recovery: hash },
       locale: 'de',
-    });
-
-    return NextResponse.json({ sessionId: session.id, url: session.url });
-  } catch (error) {
-    console.error('Checkout error:', error);
-    return NextResponse.json(
-      { error: 'Checkout konnte nicht gestartet werden.' },
-      { status: 500 }
-    );
+      success_url: `${config.origin}/erfolg`,
+      cancel_url: `${config.origin}/formular#mappe`,
+      allow_promotion_codes: false,
+    }, { idempotencyKey: `checkout:${OFFER.id}:${hash}` });
+    if (!session.url?.startsWith('https://checkout.stripe.com/')) return apiError('Checkout konnte nicht gestartet werden.', 502);
+    return Response.json({ id: session.id, url: session.url }, { headers: { 'Cache-Control': 'no-store' } });
+  } catch {
+    return apiError('Checkout konnte nicht gestartet werden. Bitte versuchen Sie es erneut.', 502);
   }
 }
