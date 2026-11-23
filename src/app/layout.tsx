@@ -20,14 +20,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="de">
       <body className="flex min-h-screen flex-col bg-white font-sans text-slate-900">
-        <a href="#inhalt" className="sr-only focus:not-sr-only focus:p-3">Zum Inhalt springen</a>
+        <a href="#inhalt" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-10 focus:bg-white focus:p-3">Zum Inhalt springen</a>
         <header className="border-b border-slate-200">
           <nav aria-label="Hauptnavigation" className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-4">
             <Link href="/" className="text-lg font-bold">MietUnterlagen</Link>
             <Link href="/formular" className="font-medium underline underline-offset-4">Bewerbung erstellen</Link>
           </nav>
         </header>
-        <main id="inhalt" className="flex-1">{children}</main>
+        <main id="inhalt" tabIndex={-1} className="flex-1">{children}</main>
         <footer className="border-t border-slate-200">
           <nav aria-label="Rechtliches" className="mx-auto flex max-w-5xl flex-wrap gap-5 px-4 py-6 text-sm underline">
             <Link href="/impressum">Impressum</Link>
