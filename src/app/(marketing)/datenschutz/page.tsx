@@ -51,12 +51,12 @@ export default function DatenschutzPage() {
           <li>Versand der Kaufbestätigung per E-Mail</li>
         </ul>
 
-        <h2>4. Keine Datenspeicherung</h2>
+        <h2>4. Verarbeitung der Formulardaten</h2>
         <p>
           <strong>Wichtig:</strong> Ihre Formulardaten werden{' '}
           <strong>nicht dauerhaft</strong> auf unseren Servern gespeichert. Die
-          Daten werden ausschließlich im Browser verarbeitet und nach der
-          PDF-Generierung automatisch gelöscht.
+          Angaben bleiben im lokalen Speicher Ihres Browsers, bis Sie diese
+          selbst löschen. Beim Checkout wird Ihre E-Mail-Adresse übermittelt.
         </p>
 
         <h2>5. Cookies und lokale Speicherung</h2>

@@ -1,8 +1,8 @@
 export const SITE_CONFIG = {
   name: 'Mieter-Selbstauskunft Generator',
   description:
-    'Professionelle Mieter-Selbstauskunft in 5 Minuten erstellen. Rechtlich geprüft, datenschutzkonform und sofort verfügbar.',
-  url: process.env.NEXT_PUBLIC_APP_URL || 'http://mietunterlagen.de',
+    'Professionelle Mieter-Selbstauskunft in 5 Minuten erstellen. Ohne Anmeldung und sofort verfügbar.',
+  url: process.env.NEXT_PUBLIC_APP_URL || 'https://mietunterlagen.de',
   keywords: [
     'Mieter Selbstauskunft',
     'Selbstauskunft Wohnung',

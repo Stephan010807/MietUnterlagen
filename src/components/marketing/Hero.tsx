@@ -21,8 +21,8 @@ export function Hero() {
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-neutral-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Erstellen Sie eine rechtlich geprüfte, professionelle Selbstauskunft
-            für Ihre Wohnungsbewerbung. Datenschutz-konform, sofort verfügbar.
+            Erstellen Sie eine professionelle Selbstauskunft
+            für Ihre Wohnungsbewerbung. Sofort verfügbar und ohne Anmeldung.
           </p>
 
           {/* CTA Buttons */}
@@ -44,7 +44,7 @@ export function Hero() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
             <div className="flex items-center justify-center gap-2 text-sm text-neutral-600">
               <Check className="h-5 w-5 text-secondary-600 flex-shrink-0" />
-              <span>Keine Datenspeicherung</span>
+              <span>Lokale Speicherung im Browser</span>
             </div>
             <div className="flex items-center justify-center gap-2 text-sm text-neutral-600">
               <Check className="h-5 w-5 text-secondary-600 flex-shrink-0" />

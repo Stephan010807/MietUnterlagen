@@ -10,9 +10,9 @@ import {
 const features = [
   {
     icon: FileCheck,
-    title: 'Rechtlich geprüfte Fragen',
+    title: 'Strukturierte Angaben',
     description:
-      'Alle Fragen entsprechen den gesetzlichen Anforderungen und schützen Ihre Privatsphäre.',
+      'Tragen Sie Ihre Angaben Schritt für Schritt in die Vorlage ein.',
   },
   {
     icon: Clock,
@@ -22,9 +22,9 @@ const features = [
   },
   {
     icon: Shield,
-    title: 'Keine Datenspeicherung',
+    title: 'Lokal im Browser gespeichert',
     description:
-      'Ihre Daten werden nur für die PDF-Erstellung verwendet und nicht gespeichert.',
+      'Ihre Formularangaben bleiben auf diesem Gerät und können dort gelöscht werden.',
   },
   {
     icon: FileText,

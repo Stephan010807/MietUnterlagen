@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     siteName: SITE_CONFIG.name,
     images: [
       {
-        url: `${SITE_CONFIG.url}/og-image.jpg`,
+        url: `${SITE_CONFIG.url}/og-image.jpeg`,
         width: 1200,
         height: 630,
         alt: 'Mieter-Selbstauskunft Generator',
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: SITE_CONFIG.name,
     description: SITE_CONFIG.description,
-    images: [`${SITE_CONFIG.url}/og-image.jpg`],
+    images: [`${SITE_CONFIG.url}/og-image.jpeg`],
   },
   robots: {
     index: true,

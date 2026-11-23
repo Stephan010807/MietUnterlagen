@@ -6,14 +6,14 @@ import { cn } from '@/lib/utils';
 
 const faqs = [
   {
-    question: 'Ist die Selbstauskunft rechtlich sicher?',
+    question: 'Welche Angaben sollte ich weitergeben?',
     answer:
-      'Ja, alle Fragen in unserer Selbstauskunft entsprechen den gesetzlichen Anforderungen und dem Datenschutz. Wir fragen nur das, was Vermieter laut Gesetz fragen dürfen. Persönliche Daten wie Religion, Parteizugehörigkeit oder Schwangerschaft werden nicht abgefragt.',
+      'Welche Angaben erforderlich sind, hängt vom Stand Ihrer Bewerbung ab. Geben Sie sensible Unterlagen nur weiter, wenn dies erforderlich ist und Sie dem Empfänger vertrauen.',
   },
   {
     question: 'Werden meine Daten gespeichert?',
     answer:
-      'Nein, Ihre Daten werden ausschließlich zur Erstellung des PDFs verwendet und nicht auf unseren Servern gespeichert. Nach der PDF-Generierung werden alle Daten automatisch gelöscht. Ihre Privatsphäre ist uns wichtig.',
+      'Ihre Formularangaben werden im Browser dieses Geräts gespeichert, bis Sie sie löschen. Für die Zahlung wird Ihre E-Mail-Adresse an Stripe übermittelt.',
   },
   {
     question: 'Kann ich die Selbstauskunft mehrfach verwenden?',
@@ -33,12 +33,12 @@ const faqs = [
   {
     question: 'Welche Zahlungsmethoden werden akzeptiert?',
     answer:
-      'Wir akzeptieren alle gängigen Kreditkarten (Visa, Mastercard, American Express) sowie PayPal. Die Zahlung erfolgt sicher über Stripe, einen der führenden Zahlungsanbieter weltweit.',
+      'Die Zahlung erfolgt über Stripe mit den beim Checkout angezeigten Kartenzahlungsmethoden.',
   },
   {
     question: 'Bekomme ich eine Rechnung?',
     answer:
-      'Ja, nach erfolgreichem Kauf erhalten Sie automatisch eine Rechnung per E-Mail. Diese können Sie für Ihre Unterlagen aufbewahren.',
+      'Ob und welche Zahlungsbestätigung Sie erhalten, hängt von der Konfiguration des Zahlungsdienstes ab. Bei Fragen wenden Sie sich an info@mietunterlagen.de.',
   },
   {
     question: 'Was passiert, wenn ich Fehler im PDF entdecke?',

@@ -29,11 +29,10 @@ export const webApplicationSchema = {
   },
   description: SITE_CONFIG.description,
   featureList: [
-    'Rechtlich geprüfte Fragen',
+    'Strukturierte Angaben',
     'Professionelles PDF-Layout',
     'Sofortiger Download',
-    'Keine Datenspeicherung',
-    'DSGVO-konform',
+    'Lokale Speicherung im Browser',
   ],
 };
 
@@ -46,7 +45,7 @@ export const faqSchema = {
       name: 'Ist die Selbstauskunft rechtlich sicher?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Ja, alle Fragen in unserer Selbstauskunft entsprechen den gesetzlichen Anforderungen und dem Datenschutz. Wir fragen nur das, was Vermieter laut Gesetz fragen dürfen.',
+        text: 'Welche Angaben erforderlich sind, hängt vom Stand Ihrer Bewerbung ab.',
       },
     },
     {
@@ -54,7 +53,7 @@ export const faqSchema = {
       name: 'Werden meine Daten gespeichert?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Nein, Ihre Daten werden ausschließlich zur Erstellung des PDFs verwendet und nicht auf unseren Servern gespeichert. Nach der PDF-Generierung werden alle Daten automatisch gelöscht.',
+        text: 'Die Formularangaben werden lokal im Browser gespeichert, bis Sie sie löschen. Für den Checkout wird Ihre E-Mail-Adresse übermittelt.',
       },
     },
     {
@@ -80,7 +79,7 @@ export const productSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'Mieter-Selbstauskunft PDF',
-  description: 'Professionelle, rechtlich geprüfte Mieter-Selbstauskunft als PDF zum Download',
+  description: 'Professionelle Mieter-Selbstauskunft als PDF zum Download',
   image: `${SITE_CONFIG.url}/og-image.jpg`,
   brand: {
     '@type': 'Brand',
@@ -115,10 +114,5 @@ export const productSchema = {
         },
       },
     },
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    reviewCount: '127',
   },
 };
