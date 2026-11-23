@@ -6,9 +6,9 @@ import { PDF_PRICE } from '@/lib/constants';
 
 const features = [
   'Professionelles PDF-Layout',
-  'Rechtlich geprüfte Fragen',
+  'Strukturierte Angaben',
   'Sofortiger Download',
-  'Keine Datenspeicherung',
+  'Lokale Speicherung im Browser',
   'Mobil & Desktop optimiert',
   'Anlagen-Checkliste inklusive',
 ];
@@ -36,7 +36,7 @@ export function Pricing() {
                 </span>
               </div>
               <p className="text-neutral-600">
-                Einmalige Zahlung, unbegrenzt nutzbar
+                Einmalige Zahlung für Ihr PDF
               </p>
             </div>
 

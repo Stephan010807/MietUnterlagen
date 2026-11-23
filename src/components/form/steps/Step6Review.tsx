@@ -127,7 +127,7 @@ export function Step6Review({ defaultValues, formData, onSubmit }: Step6Props) {
           <Checkbox
             {...register('consentToDataProcessing')}
             label="Ich stimme der Verarbeitung meiner Daten zum Zwecke der Wohnungsbewerbung zu"
-            description="Ihre Daten werden nur für die PDF-Erstellung verwendet und nicht gespeichert"
+            description="Ihre Angaben werden in diesem Browser gespeichert. Für die Zahlung wird Ihre E-Mail-Adresse übermittelt."
             error={!!errors.consentToDataProcessing}
           />
         </FormField>

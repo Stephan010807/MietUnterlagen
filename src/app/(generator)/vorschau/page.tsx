@@ -12,7 +12,7 @@ import { PDF_PRICE } from '@/lib/constants';
 
 export default function VorschauPage() {
   const router = useRouter();
-  const { formData, resetForm } = useFormStore();
+  const { formData } = useFormStore();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function VorschauPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ formData }),
+        body: JSON.stringify({ email: formData.email }),
       });
 
       const { url, error } = await response.json();
@@ -121,7 +121,7 @@ export default function VorschauPage() {
                   <div className="flex items-start gap-3">
                     <FileCheck className="h-5 w-5 text-secondary-600 flex-shrink-0 mt-0.5" />
                     <span className="text-sm text-neutral-700">
-                      Rechtlich geprüfte Fragen
+                      Strukturierte Angaben
                     </span>
                   </div>
                   <div className="flex items-start gap-3">
@@ -133,7 +133,7 @@ export default function VorschauPage() {
                   <div className="flex items-start gap-3">
                     <FileCheck className="h-5 w-5 text-secondary-600 flex-shrink-0 mt-0.5" />
                     <span className="text-sm text-neutral-700">
-                      Keine Datenspeicherung
+                      Formular lokal im Browser gespeichert
                     </span>
                   </div>
                 </div>
