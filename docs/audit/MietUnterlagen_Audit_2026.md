@@ -53,3 +53,13 @@ Alleinlebende können mit einem Namen starten. Paare können eine zweite Person 
 ## Verifikation
 
 Die ausführbaren Tests liegen unter **tests/**, die Betriebsanleitung in **README.md**. Es standen keine echten Stripe-Testschlüssel, keine Business-Dashboards und keine Live-Hosting-Einstellungen zur Verfügung. Keine Live-Zahlung, Kampagne oder Produktionsbereitstellung. Stripe-Netzwerkantworten wurden für lokale Tests simuliert und Webhook-Payloads lokal mit dem Stripe-SDK signiert. Ein echtes Stripe-Checkout- und Rückerstattungs-End-to-End bleibt Freigabevoraussetzung.
+
+| Prüfung | Ergebnis |
+| --- | --- |
+| Installation und statische Checks | Frisches npm ci, Lint und Typprüfung erfolgreich. npm meldet ESLint 9 als nicht mehr unterstützt, die installierte Next-Konfiguration wurde zusammen mit Lint geprüft. |
+| Automatisierte Tests | 9 bestanden. Formularregeln, kostenlose und bezahlte PDF-Seiten, Reihenfolge, beschädigte und passwortgeschützte Anlagen, Mengenlimits, Löschung, Request-Limits, Preisbindung, Kaufcode, Erstattung und signierte Webhook-Wiederholung. |
+| Produktionsbuild und HTTP | Build erfolgreich, lokal mit next start gestartet. Sitemap, robots.txt, OG-Bild, Impressum und Datenschutz lieferten HTTP 200. Der Kaufendpunkt antwortet ohne Stripe-Konfiguration mit 503. |
+| Chromium, 375/768/1440 px | Landingpage und Formular ohne horizontalen Überlauf. Tastatur-Sprunglink, Fehlerfokus, Paar- und Studienprofil, Vorlagentext, Download mit Textprüfung, opt-in Speicherung und Löschung durchgespielt. Axe meldete in den geprüften Formularzuständen keine automatisiert erkennbaren Verstöße. |
+| Bezahlter Browserablauf | Mit simulierten API-Antworten am Smartphone: Checkout vorbereiten, Kauf prüfen, zwei PDFs sortieren, Browser-Worker und Reihenfolge im Download prüfen sowie Fehler für eine beschädigte Anlage auslösen. |
+| Abhängigkeits-Audit | 0 gemeldete Warnungen nach Aktualisierung. Dies ist eine Momentaufnahme der npm-Advisory-Datenbank. |
+| Ausstehend | Reales Stripe-Testkonto, Support/Wiederherstellung im Betrieb, Live-Hosting und Rechtsfreigabe. Keine manuelle Screenreader-Prüfung, kein Safari- oder Firefox-Test. |
