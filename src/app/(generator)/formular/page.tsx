@@ -31,6 +31,7 @@ export default function FormularPage() {
     nextStep,
     previousStep,
     markStepCompleted,
+    resetForm,
   } = useFormStore();
 
   const handleStep1Submit = (data: Step1Data) => {
@@ -90,8 +91,17 @@ export default function FormularPage() {
           </h1>
           <p className="text-base text-neutral-600">
             Füllen Sie das Formular Schritt für Schritt aus. Alle Angaben werden
-            nur für Ihre PDF-Erstellung verwendet und nicht gespeichert.
+            in diesem Browser gespeichert, damit Sie später fortfahren können. Beim Bezahlen wird Ihre E-Mail-Adresse an den Zahlungsdienst übermittelt.
           </p>
+        </div>
+
+        <div className="mb-6 rounded-lg border border-neutral-200 p-4 text-sm text-neutral-700">
+          <p>Auf einem gemeinsam genutzten Gerät können andere Personen Ihre gespeicherten Angaben sehen.</p>
+          <button type="button" className="mt-2 underline text-primary-700" onClick={() => {
+            if (window.confirm('Alle auf diesem Gerät gespeicherten Formularangaben löschen?')) {
+              resetForm();
+            }
+          }}>Gespeicherte Angaben auf diesem Gerät löschen</button>
         </div>
 
         {/* Step Indicator */}

@@ -5,9 +5,9 @@ import { PDF_PRICE, SITE_CONFIG } from '@/lib/constants';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { formData } = body;
+    const { email } = body;
 
-    if (!formData || !formData.email) {
+    if (typeof email !== 'string' || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json(
         { error: 'Form data is required' },
         { status: 400 }
@@ -26,8 +26,8 @@ export async function POST(request: NextRequest) {
             product_data: {
               name: 'Mieter-Selbstauskunft PDF',
               description:
-                'Professionelle, rechtlich geprüfte Mieter-Selbstauskunft als PDF',
-              images: [`${SITE_CONFIG.url}/og-image.jpg`],
+                'Professionelle Mieter-Selbstauskunft als PDF',
+              images: [`${SITE_CONFIG.url}/og-image.jpeg`],
             },
             unit_amount: PDF_PRICE,
           },
@@ -37,11 +37,7 @@ export async function POST(request: NextRequest) {
       mode: 'payment',
       success_url: `${SITE_CONFIG.url}/erfolg?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${SITE_CONFIG.url}/vorschau`,
-      customer_email: formData.email,
-      metadata: {
-        customerName: `${formData.firstName} ${formData.lastName}`,
-        customerEmail: formData.email,
-      },
+      customer_email: email,
       locale: 'de',
     });
 
@@ -49,7 +45,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Checkout error:', error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to create checkout session' },
+      { error: 'Checkout konnte nicht gestartet werden.' },
       { status: 500 }
     );
   }

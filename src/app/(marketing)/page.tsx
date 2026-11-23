@@ -10,7 +10,7 @@ import { faqSchema, productSchema } from '@/lib/structured-data';
 export const metadata: Metadata = {
   title: 'Professionelle Mieter-Selbstauskunft in 5 Minuten erstellen',
   description:
-    'Erstellen Sie eine rechtlich geprüfte, professionelle Mieter-Selbstauskunft als PDF. Keine Anmeldung, sofort verfügbar, datenschutzkonform. Jetzt für 9€ herunterladen.',
+    'Erstellen Sie eine professionelle Mieter-Selbstauskunft als PDF. Keine Anmeldung, sofort verfügbar, ohne Anmeldung. Jetzt für 9€ herunterladen.',
   keywords: [
     'Mieter Selbstauskunft',
     'Selbstauskunft Wohnung',
